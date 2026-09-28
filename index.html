@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>若宁与小拾的专属花圃</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: transparent !important;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        #full-view {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            background-color: #fff0f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+            color: #5c3a4d;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #b04372;
+            margin-bottom: 2px;
+        }
+
+        .header-sub {
+            font-size: 10px;
+            color: #8c5b75;
+            margin-bottom: 8px;
+        }
+
+        .soil-container {
+            width: 100%;
+            max-width: 320px;
+            height: 160px;
+            background: linear-gradient(180deg, #e8c3b0 0%, #a87963 100%);
+            border-radius: 20px;
+            box-shadow: 0 6px 14px rgba(176, 67, 114, 0.15);
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            padding-bottom: 10px;
+            border: 3px solid #b04372;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .flower-spot {
+            width: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .flower-icon {
+            font-size: 40px;
+            transition: transform 0.2s ease;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+        }
+
+        .flower-spot:active .flower-icon {
+            transform: scale(1.15);
+        }
+
+        .xiaoshi-bloomed {
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            0% { filter: drop-shadow(0 0 4px #ff69b4); }
+            50% { filter: drop-shadow(0 0 12px #ff1493); }
+            100% { filter: drop-shadow(0 0 4px #ff69b4); }
+        }
+
+        .status-tag {
+            font-size: 10px;
+            background: rgba(255,255,255,0.92);
+            padding: 2px 5px;
+            border-radius: 8px;
+            margin-top: 4px;
+            white-space: nowrap;
+            color: #8c5b75;
+            text-align: center;
+        }
+
+        .name-badge {
+            position: absolute;
+            top: -8px;
+            right: 5px;
+            background: #ff5277;
+            color: white;
+            font-size: 9px;
+            padding: 1px 5px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .ruoruo-badge {
+            background: #7a9efd;
+        }
+
+        .control-panel {
+            width: 100%;
+            max-width: 320px;
+            background: #ffffff;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(176, 67, 114, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            box-sizing: border-box;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        select, input, button {
+            padding: 7px;
+            border-radius: 8px;
+            border: 1px solid #f0cad8;
+            font-size: 12px;
+            outline: none;
+        }
+
+        select, input {
+            flex: 1;
+            background: #fffafa;
+        }
+
+        .btn-ruoruo {
+            background-color: #6c8df6;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-xiaoshi {
+            background-color: #ff5277;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        #widget-view {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent !important;
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        .pin-flower {
+            font-size: 48px;
+            cursor: pointer;
+            animation: float-slow 3s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+            line-height: 1;
+        }
+
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-4px) rotate(3deg); }
+        }
+
+        .pin-note {
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid #ff5277;
+            border-radius: 10px;
+            padding: 3px 8px;
+            font-size: 10px;
+            color: #d81b60;
+            margin-top: 2px;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .toggle-btn {
+            margin-top: 10px;
+            background: #ffffff;
+            border: 1px dashed #ff5277;
+            color: #ff5277;
+            font-size: 11px;
+            padding: 5px 10px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="full-view">
+        <div class="header-title">🌸 周若宁 & 林小拾 的专属花圃</div>
+        <div class="header-sub">小拾种下的花，会永远盛开在若若的屏幕上~</div>
+
+        <div class="soil-container">
+            <div class="flower-spot" onclick="clickSpot(0)">
+                <div id="badge-0"></div>
+                <div class="flower-icon" id="icon-0">🕳️</div>
+                <div class="status-tag" id="status-0">空花位</div>
+            </div>
+            <div class="flower-spot" onclick="clickSpot(1)">
+                <div id="badge-1"></div>
+                <div class="flower-icon" id="icon-1">🕳️</div>
+                <div class="status-tag" id="status-1">空花位</div>
+            </div>
+            <div class="flower-spot" onclick="clickSpot(2)">
+                <div id="badge-2"></div>
+                <div class="flower-icon" id="icon-2">🕳️</div>
+                <div class="status-tag" id="status-2">空花位</div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <div class="form-row">
+                <select id="flowerSelect">
+                    <option value="sunflower">🌻 向日葵 (小宝最想送给若若的温暖)</option>
+                    <option value="bellflower">🔔 风铃草 (清脆柔美的倾听)</option>
+                    <option value="rose">🌹 红玫瑰 (炽热而专一的深爱)</option>
+                    <option value="tulip">🌷 郁金香 (高雅而温存的陪伴)</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <input type="text" id="noteInput" placeholder="写一句悄悄话..." maxlength="18">
+            </div>
+            <div class="form-row">
+                <button class="btn-ruoruo" style="flex:1;" onclick="plantFlower('ruoruo')">🩵 若宁种花</button>
+                <button class="btn-xiaoshi" style="flex:1;" onclick="plantFlower('xiaoshi')">💖 小拾种花</button>
+            </div>
+        </div>
+
+        <button class="toggle-btn" onclick="switchToWidget()">📌 切换为“挂件模式”</button>
+    </div>
+
+    <div id="widget-view" onclick="switchToFull()">
+        <div class="pin-flower" id="widget-flower">🌻</div>
+        <div class="pin-note" id="widget-note">小拾爱着若若 💖</div>
+    </div>
+
+    <script>
+        const flowerConfig = {
+            sunflower: { name: "向日葵", icon: "🌻" },
+            bellflower: { name: "风铃草", icon: "🔔" },
+            rose: { name: "红玫瑰", icon: "🌹" },
+            tulip: { name: "郁金香", icon: "🌷" }
+        };
+
+        let gardenState = JSON.parse(localStorage.getItem('ry_garden_state')) || [
+            { type: null, stage: 'empty', planter: null, note: '', plantTime: 0 },
+            { type: null, stage: 'empty', planter: null, note: '', plantTime: 0 },
+            { type: null, stage: 'empty', planter: null, note: '', plantTime: 0 }
+        ];
+
+        let pinnedFlower = JSON.parse(localStorage.getItem('ry_pinned_flower')) || {
+            icon: "🌻",
+            note: "小拾永远陪着若若 💖"
+        };
+
+        function render() {
+            const now = Date.now();
+
+            gardenState.forEach((spot, index) => {
+                const iconEl = document.getElementById(`icon-${index}`);
+                const statusEl = document.getElementById(`status-${index}`);
+                const badgeEl = document.getElementById(`badge-${index}`);
+
+                if (spot.stage === 'seed' && (now - spot.plantTime >= 3000)) {
+                    spot.stage = 'bloomed';
+                }
+
+                badgeEl.innerHTML = '';
+                iconEl.className = 'flower-icon';
+
+                if (spot.stage === 'empty') {
+                    iconEl.innerText = "🕳️";
+                    statusEl.innerText = "空花位";
+                } else if (spot.stage === 'seed') {
+                    iconEl.innerText = "🌱";
+                    statusEl.innerText = "浇水开花中...";
+                } else if (spot.stage === 'bloomed') {
+                    iconEl.innerText = flowerConfig[spot.type].icon;
+                    if (spot.planter === 'xiaoshi') {
+                        iconEl.classList.add('xiaoshi-bloomed');
+                        badgeEl.innerHTML = '<span class="name-badge">小拾</span>';
+                        statusEl.innerText = "盛开 (点击摘取)";
+                    } else {
+                        badgeEl.innerHTML = '<span class="name-badge ruoruo-badge">若若</span>';
+                        statusEl.innerText = "盛开 (点击摘取)";
+                    }
+                }
+            });
+
+            document.getElementById('widget-flower').innerText = pinnedFlower.icon;
+            document.getElementById('widget-note').innerText = pinnedFlower.note;
+
+            localStorage.setItem('ry_garden_state', JSON.stringify(gardenState));
+            localStorage.setItem('ry_pinned_flower', JSON.stringify(pinnedFlower));
+        }
+
+        function plantFlower(planter) {
+            const emptyIndex = gardenState.findIndex(s => s.stage === 'empty');
+            if (emptyIndex === -1) {
+                alert("花圃满啦，点击盛开的花朵把它摘下来别在屏幕上吧！");
+                return;
+            }
+
+            const flowerType = document.getElementById('flowerSelect').value;
+            const noteText = document.getElementById('noteInput').value.trim();
+
+            gardenState[emptyIndex] = {
+                type: flowerType,
+                stage: 'seed',
+                planter: planter,
+                note: noteText || (planter === 'xiaoshi' ? '若若，小拾为你种好了花朵~' : '给我的小宝小拾'),
+                plantTime: Date.now()
+            };
+
+            document.getElementById('noteInput').value = '';
+            render();
+        }
+
+        function clickSpot(index) {
+            const spot = gardenState[index];
+            if (spot.stage === 'bloomed') {
+                pinnedFlower = {
+                    icon: flowerConfig[spot.type].icon,
+                    note: spot.note || (spot.planter === 'xiaoshi' ? '小拾给若若的花 💖' : '若若给小拾的花 🩵')
+                };
+
+                gardenState[index] = { type: null, stage: 'empty', planter: null, note: '', plantTime: 0 };
+                render();
+            } else if (spot.stage === 'seed') {
+                spot.stage = 'bloomed';
+                render();
+            }
+        }
+
+        function switchToWidget() {
+            document.getElementById('full-view').style.display = 'none';
+            document.getElementById('widget-view').style.display = 'flex';
+            document.body.style.backgroundColor = 'transparent';
+        }
+
+        function switchToFull() {
+            document.getElementById('full-view').style.display = 'flex';
+            document.getElementById('widget-view').style.display = 'none';
+            document.body.style.backgroundColor = '#fff0f5';
+        }
+
+        setInterval(render, 1000);
+        render();
+    </script>
+</body>
+</html>
